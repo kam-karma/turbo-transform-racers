@@ -45,7 +45,9 @@ async function boot(): Promise<void> {
 
   const audio = new RaceAudio()
   audio.setMuted(!settings.sound)
-  const ads = createAds()
+  // The public demo (VITE_DEMO=1, GitHub Pages) has no ad portal: rewarded videos are granted.
+  const demo = import.meta.env.VITE_DEMO === '1'
+  const ads = createAds(demo ? { sdk: null, dev: true } : {})
   const adFlow = createAdFlow(ads)
   const adsReady = ads.init()
   // Ads and a hidden tab both silence the game (and stop the music scheduler bursting).
