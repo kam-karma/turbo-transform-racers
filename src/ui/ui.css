@@ -1,0 +1,113 @@
+/* Shared design language: candy-cartoon, chunky outlined shapes, glossy bevels, heavy rounded type. */
+@font-face { font-family: 'Kupa'; src: url('./fonts/nunito.ttf') format('truetype'); font-weight: 200 1000; font-display: swap; }
+
+:root {
+  --ink: #2b1460;
+  --ink-soft: rgba(43, 20, 96, .55);
+  --font: 'Kupa', 'Nunito', 'Arial Rounded MT Bold', 'Segoe UI', system-ui, sans-serif;
+  --gold: #ffc81f;
+  --pink: #ff5fc8;
+  --blue: #2fa8ff;
+  --purple: #a24bff;
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+}
+
+#ui { position: fixed; inset: 0; pointer-events: none; font-family: var(--font); color: #fff; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; overflow: hidden; }
+#ui *, #ui *::before, #ui *::after { box-sizing: border-box; }
+.k-hidden { display: none !important; }
+
+/* icons */
+.ic { display: inline-block; width: 1em; height: 1em; flex: none; line-height: 0; vertical-align: middle; }
+.ic > svg, .ic > img { width: 100%; height: 100%; display: block; overflow: visible; }
+.ic > svg { filter: drop-shadow(0 .06em 0 rgba(43, 20, 96, .35)); }
+
+/* outlined cartoon text */
+.k-out { -webkit-text-stroke: .16em var(--ink); paint-order: stroke fill; text-shadow: 0 .09em 0 var(--ink); }
+.k-out-thin { -webkit-text-stroke: .1em var(--ink); paint-order: stroke fill; text-shadow: 0 .07em 0 var(--ink); }
+
+/* buttons ------------------------------------------------------------------------------ */
+.kbtn {
+  --top: #fff07a; --mid: #ffc21a; --bot: #ff8a00; --edge: var(--ink);
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: .45em;
+  min-height: 56px; padding: .5em 1.25em .62em; border: 4px solid var(--ink); border-radius: 22px;
+  font: 900 22px/1 var(--font); letter-spacing: .02em; text-transform: uppercase; color: #fff;
+  background: linear-gradient(var(--top), var(--mid) 52%, var(--bot));
+  box-shadow: inset 0 -6px 0 rgba(0, 0, 0, .16), inset 0 3px 0 rgba(255, 255, 255, .65), 0 6px 0 var(--edge), 0 12px 20px rgba(30, 10, 80, .35);
+  cursor: pointer; pointer-events: auto; outline: none; white-space: nowrap;
+  transition: transform .12s cubic-bezier(.3, 1.6, .5, 1), box-shadow .12s, filter .12s;
+}
+.kbtn::before { content: ''; position: absolute; left: 8px; right: 8px; top: 4px; height: 42%; border-radius: 16px 16px 40% 40% / 16px 16px 14px 14px; background: linear-gradient(rgba(255, 255, 255, .7), rgba(255, 255, 255, .08)); pointer-events: none; }
+.kbtn > * { position: relative; }
+.kbtn .lbl { -webkit-text-stroke: 5px var(--ink); paint-order: stroke fill; text-shadow: 0 3px 0 var(--ink); }
+.kbtn .ic { width: 1.5em; height: 1.5em; margin: -.3em 0; }
+.kbtn small { display: block; font-size: .55em; letter-spacing: .04em; margin-top: .2em; opacity: .95; }
+.kbtn:hover { filter: brightness(1.07) saturate(1.05); transform: translateY(-2px) scale(1.025); }
+.kbtn:active, .kbtn.press { transform: translateY(5px) scale(.98); box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .16), inset 0 3px 0 rgba(255, 255, 255, .65), 0 1px 0 var(--edge), 0 4px 8px rgba(30, 10, 80, .3); }
+.kbtn:focus-visible { box-shadow: inset 0 -6px 0 rgba(0, 0, 0, .16), inset 0 3px 0 rgba(255, 255, 255, .65), 0 6px 0 var(--edge), 0 0 0 5px #fff, 0 0 0 9px var(--blue); }
+.kbtn[disabled], .kbtn.off { filter: grayscale(.85) brightness(.9); cursor: default; transform: none; }
+.kbtn-blue { --top: #a8ecff; --mid: #39b4ff; --bot: #1662e0; }
+.kbtn-pink { --top: #ffc9f0; --mid: #ff62c9; --bot: #d4198f; }
+.kbtn-red { --top: #ffb0b0; --mid: #ff5468; --bot: #d01a3c; }
+.kbtn-white { --top: #ffffff; --mid: #f1f3ff; --bot: #c8cff0; color: var(--ink); }
+.kbtn-white .lbl { -webkit-text-stroke: 0; text-shadow: none; }
+.kbtn-dark { --top: #7a6cc0; --mid: #4c3d96; --bot: #2f2170; }
+/* rewarded video: never green (spec §13) */
+.kbtn-video { --top: #e5b4ff; --mid: #a650ff; --bot: #6a1fe0; }
+.kbtn-video .vid-badge { position: absolute; top: -14px; right: -12px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(#ffb54a, #ff6a00); border: 3px solid var(--ink); box-shadow: 0 3px 0 var(--ink); }
+.kbtn-video .vid-badge .ic { width: 22px; height: 22px; margin: 0; }
+.kbtn-xl { font-size: 34px; min-height: 84px; padding: .42em 1.4em .55em; border-radius: 30px; border-width: 5px; }
+.kbtn-sm { font-size: 17px; min-height: 46px; padding: .45em .9em .55em; border-radius: 18px; }
+.kround { width: 60px; height: 60px; min-height: 0; padding: 0; border-radius: 50%; }
+.kround .ic { width: 34px; height: 34px; margin: 0; }
+.kround::before { left: 9px; right: 9px; border-radius: 50% 50% 40% 40%; }
+
+/* panels ------------------------------------------------------------------------------- */
+.kpanel {
+  position: relative; color: var(--ink); background: linear-gradient(#ffffff, #eef1ff 70%, #dfe5ff);
+  border: 4px solid var(--ink); border-radius: 28px;
+  box-shadow: inset 0 -6px 0 rgba(43, 20, 96, .08), 0 7px 0 var(--ink), 0 22px 40px rgba(20, 8, 60, .35);
+  pointer-events: auto;
+}
+.kribbon {
+  position: relative; display: inline-flex; align-items: center; gap: .4em; padding: .35em 1.2em .45em; font: 900 26px/1 var(--font);
+  color: #fff; text-transform: uppercase; background: linear-gradient(#ff8fd9, #ff4fb9 55%, #d81e8c);
+  border: 4px solid var(--ink); border-radius: 18px; box-shadow: inset 0 3px 0 rgba(255, 255, 255, .5), 0 5px 0 var(--ink);
+}
+.kribbon .lbl { -webkit-text-stroke: 5px var(--ink); paint-order: stroke fill; }
+
+/* capsule counters (gold, stars) */
+.kpill {
+  position: relative; display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 18px 0 46px; margin-left: 12px;
+  font: 900 24px/1 var(--font); color: #fff; background: linear-gradient(rgba(43, 20, 96, .82), rgba(30, 12, 74, .92));
+  border: 3px solid #fff; border-radius: 99px; box-shadow: 0 4px 0 var(--ink), 0 8px 16px rgba(20, 8, 60, .3);
+}
+.kpill > .ic { position: absolute; left: -14px; top: 50%; width: 56px; height: 56px; transform: translateY(-50%); }
+.kpill .num { min-width: 2ch; text-shadow: 0 2px 0 var(--ink); }
+.kpill .plus { margin-left: 4px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 22px; background: linear-gradient(#a8ff7a, #3fbf2a); border: 2px solid var(--ink); }
+
+/* progress bars */
+.kbar { position: relative; height: 18px; border-radius: 99px; background: rgba(43, 20, 96, .18); border: 3px solid var(--ink); overflow: hidden; }
+.kbar > i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 99px; background: linear-gradient(#ffe56b, #ffb000); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .55); transition: width .5s cubic-bezier(.2, 1, .3, 1); }
+
+/* shared animations */
+@keyframes k-pop-in { 0% { transform: scale(.4); opacity: 0 } 60% { transform: scale(1.08); opacity: 1 } 100% { transform: scale(1); opacity: 1 } }
+@keyframes k-rise-in { 0% { transform: translateY(28px); opacity: 0 } 100% { transform: none; opacity: 1 } }
+@keyframes k-drop-in { 0% { transform: translateY(-40px); opacity: 0 } 70% { transform: translateY(4px); opacity: 1 } 100% { transform: none; opacity: 1 } }
+@keyframes k-pulse { 0%, 100% { transform: scale(1) } 50% { transform: scale(1.06) } }
+@keyframes k-bump { 0% { transform: scale(1) } 35% { transform: scale(1.3) } 100% { transform: scale(1) } }
+@keyframes k-shine { 0% { transform: translateX(-120%) skewX(-20deg) } 60%, 100% { transform: translateX(260%) skewX(-20deg) } }
+@keyframes k-spin { to { transform: rotate(360deg) } }
+@keyframes k-wiggle { 0%, 100% { transform: rotate(0) } 25% { transform: rotate(-8deg) } 75% { transform: rotate(8deg) } }
+.k-pop { animation: k-pop-in .45s cubic-bezier(.2, 1.4, .4, 1) both; animation-delay: var(--d, 0s); }
+.k-rise { animation: k-rise-in .45s cubic-bezier(.2, 1.2, .4, 1) both; animation-delay: var(--d, 0s); }
+.k-drop { animation: k-drop-in .5s cubic-bezier(.2, 1.2, .4, 1) both; animation-delay: var(--d, 0s); }
+.k-bump { animation: k-bump .35s cubic-bezier(.2, 1.6, .4, 1); }
+.k-shine { position: relative; overflow: hidden; }
+.k-shine::after { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 30%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55), transparent); animation: k-shine 2.8s ease-in-out infinite; pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .k-pop, .k-rise, .k-drop, .k-shine::after { animation: none !important; }
+}

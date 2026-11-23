@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kaos dev</title>
+    <base href="/" />
+    <style>
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #05041a; font: 14px system-ui, sans-serif; color: #fff; }
+      canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+      #hud { position: fixed; inset: 0; pointer-events: none; }
+      #info { position: fixed; left: 8px; bottom: 8px; font: 11px monospace; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; }
+      #top { position: fixed; left: 16px; top: 12px; font: 900 22px system-ui; text-shadow: 0 0 8px #ff3df2; }
+      #count { position: fixed; left: 50%; top: 30%; transform: translate(-50%, -50%); font: 900 120px system-ui; text-shadow: 0 0 30px #22e6ff; }
+      #pops { position: fixed; left: 50%; top: 22%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 4px; }
+      #pops div { font: 900 30px system-ui; color: #ffe03a; text-shadow: 0 0 12px #ff3df2; animation: up 1.1s forwards; }
+      @keyframes up { from { opacity: 1; transform: translateY(0) scale(1.2); } to { opacity: 0; transform: translateY(-40px) scale(1); } }
+      .meter { width: 210px; padding: 4px 8px; border-radius: 10px; background: rgba(12,8,34,0.72); border: 2px solid var(--c); box-shadow: 0 0 12px var(--c); font: 900 13px system-ui; }
+      .meter i { display: block; height: 10px; margin-top: 3px; border-radius: 5px; background: var(--c); box-shadow: 0 0 10px var(--c); width: 0; }
+      #flash { position: fixed; inset: 0; opacity: 0; transition: opacity 0.35s; }
+    </style>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+    <div id="hud"><div id="flash"></div><div id="top"></div><div id="count"></div><div id="pops"></div></div>
+    <div id="info"></div>
+    <script type="module" src="/src/kaos/dev.ts"></script>
+  </body>
+</html>

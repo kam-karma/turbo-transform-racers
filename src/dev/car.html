@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CarView dev</title>
+    <style>
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #6fc3ff; font: 13px system-ui, sans-serif; }
+      canvas { display: block; }
+      #panel { position: fixed; left: 8px; top: 8px; background: rgba(255,255,255,0.85); padding: 8px; border-radius: 8px; display: flex; flex-direction: column; gap: 4px; }
+      #panel button { margin-right: 2px; }
+      #info { white-space: pre; font: 11px monospace; }
+    </style>
+  </head>
+  <body>
+    <div id="panel">
+      <div>
+        <button data-form="car">1 car</button><button data-form="boat">2 boat</button><button data-form="glider">3 glider</button><button data-form="climber">4 climber</button>
+      </div>
+      <div>
+        model <select id="model"><option>rt40</option><option>rt40_lod</option><option>r40_lod</option><option>r245_lod</option><option>fallback</option><option>six</option></select>
+        surface <select id="surface"><option>road</option><option>water</option><option>gap</option><option>climb</option></select>
+      </div>
+      <label>speed <input id="speed" type="range" min="0" max="50" value="20" /></label>
+      <label>yaw <input id="yaw" type="range" min="-60" max="60" value="0" /></label>
+      <label>opacity <input id="opacity" type="range" min="0" max="100" value="100" /></label>
+      <label>time scale <input id="ts" type="range" min="2" max="100" value="100" /></label>
+      <label><input id="cycle" type="checkbox" /> auto-cycle forms</label>
+      <div id="info"></div>
+    </div>
+    <script type="module" src="./car.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Turbo Transform Racers</title>
+    <style>
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #6fc3ff; touch-action: none; user-select: none; -webkit-user-select: none; }
+      canvas#game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+    </style>
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+    <div id="ui"></div>
+    <!-- Poki SDK: ads and loading events (src/platform/ads.ts falls back to a stand-in without it). -->
+    <script src="https://game-cdn.poki.com/scripts/v2/poki-sdk.js"></script>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>
