@@ -13,6 +13,7 @@
   --num-color: #fff;
   --num-stroke: var(--ink);
   position: absolute; inset: 0; pointer-events: none; font-family: var(--font);
+  zoom: var(--hud-scale, 1);
 }
 .rhud[data-world='dev-ev'] {
   --chip-bg: linear-gradient(#ffe35c, #ffcc12 55%, #f0a800);
@@ -152,20 +153,3 @@ body.touch .fbtn .key { display: none; }
 .rhud .flash { position: absolute; inset: 0; opacity: 0; background: radial-gradient(ellipse at center, transparent 35%, var(--flash, #fff) 100%); }
 .rhud .flash.on { animation: hud-flash .45s ease-out; }
 @keyframes hud-flash { 0% { opacity: .9 } 100% { opacity: 0 } }
-
-/* phones: shrink the HUD so the track stays visible */
-@media (max-height: 520px) {
-  .rhud .place .n { font-size: 56px; -webkit-text-stroke-width: 7px; }
-  .rhud .place .of { font-size: 22px; }
-  .rhud .stats { top: calc(70px + var(--safe-t)); gap: 7px; }
-  .rhud .stats .chip { height: 32px; font-size: 17px; }
-  .rhud .stats .chip .ic { width: 28px; height: 28px; }
-  .rhud .prog { width: min(42vw, 420px); top: calc(8px + var(--safe-t)); }
-  .rhud .speedo { transform: translateX(-50%) scale(.6); transform-origin: 50% 100%; }
-  .rhud .cmeter { left: calc(50% + 86px); bottom: calc(14px + var(--safe-b)); }
-  .fbtns { transform: scale(.78); transform-origin: 100% 100%; }
-  .rhud .count { transform: scale(.7); }
-  .rhud .pop { font-size: 44px; }
-  .rhud .meters { top: calc(70px + var(--safe-t)); }
-  .rhud .meter { width: 170px; height: 36px; font-size: 12px; }
-}

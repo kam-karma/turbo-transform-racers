@@ -69,5 +69,5 @@
 @media (max-height: 520px), (max-aspect-ratio: 3/2) {
   .res-left { width: 430px; }
   .pod { width: 132px; }
-  .res-panel { width: 470px; }
+  .res-panel { width: 470px; top: 92px; gap: 7px; padding: 12px 18px 14px; }
 }

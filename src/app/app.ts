@@ -247,7 +247,7 @@ export class App {
       wrap.classList.add('out')
       window.setTimeout(() => wrap.remove(), 220)
       opts.onClose?.()
-      if (this.modalLayer.childElementCount <= 1) this.race.autoPause(this.forcedPause())
+      this.race.autoPause(this.forcedPause())
     }
     wrap.close = close
     if (opts.dismissable !== false) {
@@ -291,7 +291,9 @@ export class App {
   }
 
   private forcedPause(): boolean {
-    return document.hidden || this.modalLayer.childElementCount > 0 || (this.d.touch && window.matchMedia('(orientation: portrait)').matches)
+    // A closing modal stays in the DOM for its fade-out: it no longer holds the race.
+    const open = [...this.modalLayer.children].some((c) => !c.classList.contains('out'))
+    return document.hidden || open || (this.d.touch && window.matchMedia('(orientation: portrait)').matches)
   }
 
   private buildRotate(): void {
@@ -312,7 +314,12 @@ export class App {
     this.showroom.resize(w, h)
     this.d.camera.aspect = w / Math.max(1, h)
     this.d.camera.updateProjectionMatrix()
-    document.documentElement.style.setProperty('--ui-scale', String(Math.max(0.62, Math.min(1.15, Math.min(w / 1280, h / 720)))))
+    // Screens are designed at 1280×720 and zoomed to fit; the race HUD keeps a little more size
+    // than that so it stays readable, but never so much that it hides the track on a phone.
+    const fit = Math.min(w / 1280, h / 720)
+    const root = document.documentElement.style
+    root.setProperty('--ui-scale', String(Math.max(0.4, Math.min(1.15, fit))))
+    root.setProperty('--hud-scale', String(Math.max(0.48, Math.min(1, fit * 1.18))))
   }
 }
 
