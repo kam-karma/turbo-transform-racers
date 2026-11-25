@@ -27,6 +27,15 @@ export function parseSettings(raw: unknown, quality: Quality): Settings {
   }
 }
 
+/** True when the player (or the game) has stored settings before. */
+export function hasSettings(): boolean {
+  try {
+    return localStorage.getItem(KEY) !== null
+  } catch {
+    return false
+  }
+}
+
 /** `quality` is the automatic first pick, used when nothing valid is stored. */
 export function loadSettings(quality: Quality): Settings {
   try {

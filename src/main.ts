@@ -6,6 +6,7 @@ import * as THREE from 'three'
 import { App } from './app/app'
 import { RaceAudio } from './game/audio'
 import type { SongId } from './game/audioMusic'
+import { guardContext } from './game/contextGuard'
 import { createPostFx } from './game/postFx'
 import { autoQuality, FpsGuard, profileFor } from './game/quality'
 import type { CarDef } from './meta/catalog'
@@ -17,7 +18,7 @@ import { createAds } from './platform/ads'
 import { createAdFlow } from './platform/adFlow'
 import { DevInput } from './dev/devInput'
 import { Input } from './ui/input'
-import { loadSettings, type Settings } from './ui/settings'
+import { hasSettings, loadSettings, saveSettings, type Settings } from './ui/settings'
 
 /** Phones and tablets: a coarse pointer and no mouse. Touch laptops keep the keyboard layout. */
 const isTouch = (): boolean => window.matchMedia('(pointer: coarse)').matches && !window.matchMedia('(any-pointer: fine)').matches
@@ -36,9 +37,11 @@ function makeRenderer(canvas: HTMLCanvasElement, settings: Settings): THREE.WebG
 
 async function boot(): Promise<void> {
   const touch = isTouch()
-  let settings: Settings = loadSettings(autoQuality(touch))
+  // The GPU probe opens a throwaway WebGL context: only when no choice is stored yet.
+  let settings: Settings = loadSettings(hasSettings() ? 'high' : autoQuality(touch))
   const canvas = document.getElementById('game') as HTMLCanvasElement
   const renderer = makeRenderer(canvas, settings)
+  guardContext(canvas, () => settings.quality, () => saveSettings({ ...settings, quality: 'low' }))
   const camera = new THREE.PerspectiveCamera(62, window.innerWidth / window.innerHeight, 0.3, 6000)
   const post = createPostFx(renderer, new THREE.Scene(), camera)
   post.setEnabled(profileFor(settings.quality, window.devicePixelRatio).bloom)
